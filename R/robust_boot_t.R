@@ -1,9 +1,10 @@
 library(parallel)
 library(data.table)
-library(compiler)
 
 #' Get a t-statistic
 #'
+#' @importFrom stats var
+#' @importFrom parallel mclapply
 #' @param x a vector of numeric values
 #' @param y a vector of numeric values
 #' @param var.equal boolean indicating whether or not to assume equal variance. Defaults to FALSE
@@ -33,8 +34,6 @@ get.t.stat <- function(x, y, var.equal = FALSE)
     return((mean(x) - mean(y)) / s_d)
   }
 }
-
-get.t.stat <- cmpfun(get.t.stat)
 
 # Two-sided t-test with equal variance
 robust.boot.t.1 <- function(x, y, n.boot, n.cores = 1)
@@ -139,9 +138,4 @@ robust.boot.t.combined <- function(x, y, n.boot, n.cores = 1)
   
   return(p.val.table)
 }
-
-robust.boot.t.1 <- cmpfun(robust.boot.t.1)
-robust.boot.t.2 <- cmpfun(robust.boot.t.2)
-robust.boot.t.combined <- cmpfun(robust.boot.t.combined)
-
 
