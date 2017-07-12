@@ -6,7 +6,9 @@ library(compiler)
 #'
 #' @param x a vector of numeric values
 #' @param y a vector of numeric values
+#' @param var.equal boolean indicating whether or not to assume equal variance. Defaults to FALSE
 #' @return the t-statistic based on datasets x and y
+#' @export
 #' @examples
 #' get.t.stat(rnorm(20, 0, 1), rnorm(30, 0, 1))
 #' get.t.stat(rnorm(20, 5, 1), rnorm(30, 0, 2))

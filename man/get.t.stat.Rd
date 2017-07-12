@@ -10,6 +10,8 @@ get.t.stat(x, y, var.equal = FALSE)
 \item{x}{a vector of numeric values}
 
 \item{y}{a vector of numeric values}
+
+\item{var.equal}{boolean indicating whether or not to assume equal variance. Defaults to FALSE}
 }
 \value{
 the t-statistic based on datasets x and y
