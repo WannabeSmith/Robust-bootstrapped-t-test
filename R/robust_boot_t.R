@@ -1,18 +1,6 @@
 library(parallel)
 library(data.table)
 
-#' Get a t-statistic
-#'
-#' @importFrom stats var
-#' @importFrom parallel mclapply
-#' @param x a vector of numeric values
-#' @param y a vector of numeric values
-#' @param var.equal boolean indicating whether or not to assume equal variance. Defaults to FALSE
-#' @return the t-statistic based on datasets x and y
-#' @export
-#' @examples
-#' get.t.stat(rnorm(20, 0, 1), rnorm(30, 0, 1))
-#' get.t.stat(rnorm(20, 5, 1), rnorm(30, 0, 2))
 get.t.stat <- function(x, y, var.equal = FALSE)
 {
   n1 <- length(x)
@@ -35,19 +23,6 @@ get.t.stat <- function(x, y, var.equal = FALSE)
   }
 }
 
-#' Perform robust bootstrapped t-test 1
-#'
-#' @importFrom stats var
-#' @importFrom parallel mclapply
-#' @param x a vector of numeric values
-#' @param y a vector of numeric values
-#' @param n.boot number of bootstrap resamples to perform
-#' @param n.cores number of cores to use for parallelization. Defaults to 1. 
-#' @return p-value of the test
-#' @export
-#' @examples
-#' robust.boot.t.1(rnorm(20, 0, 1), rnorm(30, 0, 1), n.boot = 999)
-#' robust.boot.t.1(rnorm(20, 0, 1), rnorm(30, 5, 1), n.boot = 999, n.cores = 2)
 robust.boot.t.1 <- function(x, y, n.boot, n.cores = 1)
 {
   arguments <- as.list(match.call())
@@ -73,19 +48,6 @@ robust.boot.t.1 <- function(x, y, n.boot, n.cores = 1)
   return(p.val)
 }
 
-#' Perform robust bootstrapped t-test 2
-#'
-#' @importFrom stats var
-#' @importFrom parallel mclapply
-#' @param x a vector of numeric values
-#' @param y a vector of numeric values
-#' @param n.boot number of bootstrap resamples to perform
-#' @param n.cores number of cores to use for parallelization. Defaults to 1. 
-#' @return p-value of the test
-#' @export
-#' @examples
-#' robust.boot.t.2(rnorm(20, 0, 1), rnorm(30, 0, 1), n.boot = 999)
-#' robust.boot.t.2(rnorm(20, 0, 1), rnorm(30, 5, 1), n.boot = 999, n.cores = 2)
 robust.boot.t.2 <- function(x, y, n.boot, n.cores = 1)
 {
   arguments <- as.list(match.call())
@@ -120,19 +82,6 @@ robust.boot.t.2 <- function(x, y, n.boot, n.cores = 1)
   return(p.val)
 }
 
-#' Perform robust bootstrapped t-tests 1 and 2 simultaneously
-#'
-#' @importFrom stats var
-#' @importFrom parallel mclapply
-#' @param x a vector of numeric values
-#' @param y a vector of numeric values
-#' @param n.boot number of bootstrap resamples to perform
-#' @param n.cores number of cores to use for parallelization. Defaults to 1. 
-#' @return p-value of the test
-#' @export
-#' @examples
-#' robust.boot.t.combined(rnorm(20, 0, 1), rnorm(30, 0, 1), n.boot = 999)
-#' robust.boot.t.combined(rnorm(20, 0, 1), rnorm(30, 5, 1), n.boot = 999, n.cores = 2)
 robust.boot.t.combined <- function(x, y, n.boot, n.cores = 1)
 {
   arguments <- as.list(match.call())
@@ -174,5 +123,40 @@ robust.boot.t.combined <- function(x, y, n.boot, n.cores = 1)
   p.val.table <- c("t1" = p.val.1, "t2" = p.val.2)
   
   return(p.val.table)
+}
+
+#' Perform a robust bootstrapped t-test
+#'
+#' @importFrom parallel mclapply
+#' @importFrom stats var
+#' @param x a vector of numeric data points
+#' @param y a vector of numeric data points
+#' @param n.boot number of bootstrap resamples to perform
+#' @param n.cores number of cores to use for parallelization. Defaults to 1. If using Windows, set n.cores = 1.
+#' @param algorithm Which robust bootstrapped t-test to perform. Set 'algorithm = 1' for method 1, 'algorithm = 1' for method 2, and 'algorithm = "both"' to perform methods 1 and 2 simultaneously.
+#' @return p-value of the test
+#' @export
+#' @examples
+#' robust.boot.t(rnorm(20, 0, 1), rnorm(30, 0, 1), n.boot = 999)
+#' robust.boot.t(rnorm(20, 0, 1), rnorm(30, 5, 1), n.boot = 999, n.cores = 2)
+robust.boot.t <- function(x, y, n.boot, n.cores = 1, algorithm = "combined")
+{
+  if (algorithm == "combined")
+  {
+    return(robust.boot.t.combined(x, y, n.boot, n.cores))
+  }
+  else if (algorithm == 1)
+  {
+    return(robust.boot.t.1(x, y, n.boot, n.cores))
+  }
+  else if (algorithm == 2)
+  {
+    return(robust.boot.t.2(x, y, n.boot, n.cores))
+  }
+  else 
+  {
+    stop("Invalid algorithm specification.\n
+         Use \"algorithm = 1\" or \"algorithm = 2\" or \"algorithm = \'both\'\"")  
+  }
 }
 
