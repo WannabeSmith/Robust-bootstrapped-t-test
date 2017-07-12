@@ -35,7 +35,19 @@ get.t.stat <- function(x, y, var.equal = FALSE)
   }
 }
 
-# Two-sided t-test with equal variance
+#' Perform robust bootstrapped t-test 1
+#'
+#' @importFrom stats var
+#' @importFrom parallel mclapply
+#' @param x a vector of numeric values
+#' @param y a vector of numeric values
+#' @param n.boot number of bootstrap resamples to perform
+#' @param n.cores number of cores to use for parallelization. Defaults to 1. 
+#' @return p-value of the test
+#' @export
+#' @examples
+#' robust.boot.t.1(rnorm(20, 0, 1), rnorm(30, 0, 1), n.boot = 999)
+#' robust.boot.t.1(rnorm(20, 0, 1), rnorm(30, 5, 1), n.boot = 999, n.cores = 2)
 robust.boot.t.1 <- function(x, y, n.boot, n.cores = 1)
 {
   arguments <- as.list(match.call())
@@ -61,7 +73,19 @@ robust.boot.t.1 <- function(x, y, n.boot, n.cores = 1)
   return(p.val)
 }
 
-# One-sided t-test with unequal variance
+#' Perform robust bootstrapped t-test 2
+#'
+#' @importFrom stats var
+#' @importFrom parallel mclapply
+#' @param x a vector of numeric values
+#' @param y a vector of numeric values
+#' @param n.boot number of bootstrap resamples to perform
+#' @param n.cores number of cores to use for parallelization. Defaults to 1. 
+#' @return p-value of the test
+#' @export
+#' @examples
+#' robust.boot.t.2(rnorm(20, 0, 1), rnorm(30, 0, 1), n.boot = 999)
+#' robust.boot.t.2(rnorm(20, 0, 1), rnorm(30, 5, 1), n.boot = 999, n.cores = 2)
 robust.boot.t.2 <- function(x, y, n.boot, n.cores = 1)
 {
   arguments <- as.list(match.call())
@@ -96,6 +120,19 @@ robust.boot.t.2 <- function(x, y, n.boot, n.cores = 1)
   return(p.val)
 }
 
+#' Perform robust bootstrapped t-tests 1 and 2 simultaneously
+#'
+#' @importFrom stats var
+#' @importFrom parallel mclapply
+#' @param x a vector of numeric values
+#' @param y a vector of numeric values
+#' @param n.boot number of bootstrap resamples to perform
+#' @param n.cores number of cores to use for parallelization. Defaults to 1. 
+#' @return p-value of the test
+#' @export
+#' @examples
+#' robust.boot.t.combined(rnorm(20, 0, 1), rnorm(30, 0, 1), n.boot = 999)
+#' robust.boot.t.combined(rnorm(20, 0, 1), rnorm(30, 5, 1), n.boot = 999, n.cores = 2)
 robust.boot.t.combined <- function(x, y, n.boot, n.cores = 1)
 {
   arguments <- as.list(match.call())
