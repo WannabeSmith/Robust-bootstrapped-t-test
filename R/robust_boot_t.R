@@ -2,6 +2,14 @@ library(parallel)
 library(data.table)
 library(compiler)
 
+#' Get a t-statistic
+#'
+#' @param x a vector of numeric values
+#' @param y a vector of numeric values
+#' @return the t-statistic based on datasets x and y
+#' @examples
+#' get.t.stat(rnorm(20, 0, 1), rnorm(30, 0, 1))
+#' get.t.stat(rnorm(20, 5, 1), rnorm(30, 0, 2))
 get.t.stat <- function(x, y, var.equal = FALSE)
 {
   n1 <- length(x)
