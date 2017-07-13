@@ -141,7 +141,7 @@ robust.boot.t.combined <- function(x, y, n.boot, n.cores = 1)
 #' robust.boot.t(rnorm(20, 0, 1), rnorm(30, 5, 1), n.boot = 999, n.cores = 2)
 robust.boot.t <- function(x, y, n.boot, n.cores = 1, algorithm = "combined")
 {
-  if (Sys.info()['sysname'] == "Windows" && n.cores == 1)
+  if (Sys.info()['sysname'] == "Windows" && n.cores > 1)
   {
     warning("Multi-core processing is not supported on Windows. Setting n.cores to 1.")
     n.cores <- 1
