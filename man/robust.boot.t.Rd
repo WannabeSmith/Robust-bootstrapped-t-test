@@ -24,6 +24,6 @@ p-value of the test
 Perform a robust bootstrapped t-test
 }
 \examples{
-robust.boot.t(rnorm(20, 0, 1), rnorm(30, 0, 1), n.boot = 999)
-robust.boot.t(rnorm(20, 0, 1), rnorm(30, 5, 1), n.boot = 999, n.cores = 2)
+robust.boot.t(rnorm(20, 0, 1), rnorm(30, 1, 1), n.boot = 999)
+robust.boot.t(rnorm(20, 0, 1), rnorm(30, 5, 1), n.boot = 9999, n.cores = 2)
 }
