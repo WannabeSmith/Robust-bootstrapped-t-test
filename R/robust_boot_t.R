@@ -125,21 +125,21 @@ robust.boot.t.combined <- function(x, y, n.boot, n.cores = 1)
   return(p.val.table)
 }
 
-#' Perform a robust bootstrapped t-test
+#' Perform robust bootstrapped t-tests
 #'
 #' @importFrom parallel mclapply
 #' @importFrom stats var
-#' @param x a vector of numeric data points
-#' @param y a vector of numeric data points
+#' @param x a (non-empty) numeric vector of data values.
+#' @param y a (non-empty) numeric vector of data values.
 #' @param n.boot number of bootstrap resamples to perform
 #' @param n.cores number of cores to use for parallelization. Defaults to 1. If using Windows, set n.cores = 1.
-#' @param algorithm Which robust bootstrapped t-test to perform. Set 'algorithm = 1' for method 1, 'algorithm = 1' for method 2, and 'algorithm = "both"' to perform methods 1 and 2 simultaneously.
+#' @param method Which robust bootstrapped t-test to perform. Set 'method = 1' for method 1, 'method = 1' for method 2, and 'method = "both"' to perform methods 1 and 2 simultaneously.
 #' @return p-value of the test
 #' @export
 #' @examples
 #' robust.boot.t(rnorm(20, 0, 1), rnorm(30, 1, 1), n.boot = 999)
 #' robust.boot.t(rnorm(20, 0, 1), rnorm(30, 5, 1), n.boot = 9999, n.cores = 2)
-robust.boot.t <- function(x, y, n.boot, n.cores = 1, algorithm = "combined")
+robust.boot.t <- function(x, y, n.boot, n.cores = 1, method = "combined")
 {
   if (Sys.info()['sysname'] == "Windows" && n.cores > 1)
   {
@@ -147,22 +147,22 @@ robust.boot.t <- function(x, y, n.boot, n.cores = 1, algorithm = "combined")
     n.cores <- 1
   }
   
-  if (algorithm == "combined")
+  if (method == "combined")
   {
     return(robust.boot.t.combined(x, y, n.boot, n.cores))
   }
-  else if (algorithm == 1)
+  else if (method == 1)
   {
     return(robust.boot.t.1(x, y, n.boot, n.cores))
   }
-  else if (algorithm == 2)
+  else if (method == 2)
   {
     return(robust.boot.t.2(x, y, n.boot, n.cores))
   }
   else 
   {
-    stop("Invalid algorithm specification.\n
-         Use \"algorithm = 1\" or \"algorithm = 2\" or \"algorithm = \'both\'\"")  
+    stop("Invalid method specification.\n
+         Use \"method = 1\" or \"method = 2\" or \"method = \'both\'\"")  
   }
 }
 
