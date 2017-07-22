@@ -2,26 +2,26 @@
 % Please edit documentation in R/robust_boot_t.R
 \name{robust.boot.t}
 \alias{robust.boot.t}
-\title{Perform a robust bootstrapped t-test}
+\title{Perform robust bootstrapped t-tests}
 \usage{
-robust.boot.t(x, y, n.boot, n.cores = 1, algorithm = "combined")
+robust.boot.t(x, y, n.boot, n.cores = 1, method = "combined")
 }
 \arguments{
-\item{x}{a vector of numeric data points}
+\item{x}{a (non-empty) numeric vector of data values.}
 
-\item{y}{a vector of numeric data points}
+\item{y}{a (non-empty) numeric vector of data values.}
 
 \item{n.boot}{number of bootstrap resamples to perform}
 
 \item{n.cores}{number of cores to use for parallelization. Defaults to 1. If using Windows, set n.cores = 1.}
 
-\item{algorithm}{Which robust bootstrapped t-test to perform. Set 'algorithm = 1' for method 1, 'algorithm = 1' for method 2, and 'algorithm = "both"' to perform methods 1 and 2 simultaneously.}
+\item{method}{Which robust bootstrapped t-test to perform. Set 'method = 1' for method 1, 'method = 1' for method 2, and 'method = "both"' to perform methods 1 and 2 simultaneously.}
 }
 \value{
 p-value of the test
 }
 \description{
-Perform a robust bootstrapped t-test
+Perform robust bootstrapped t-tests
 }
 \examples{
 robust.boot.t(rnorm(20, 0, 1), rnorm(30, 1, 1), n.boot = 999)
