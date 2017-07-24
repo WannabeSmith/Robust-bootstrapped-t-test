@@ -183,11 +183,6 @@ robust.boot.t.combined <- function(x, y, n.boot, n.cores = 1, conf.level = 0.95)
   
   p.val.table <- c("t1" = p.val.1, "t2" = p.val.2)
   
-  # ttest.output.1 <- get.ttest.output(x = x, y = y, method = 1, t = t.1, conf.int = conf.int.1, 
-  #                                    p.val = p.val.1, conf.level = conf.level)
-  # ttest.output.2 <- get.ttest.output(x = x, y = y, method = 2, t = t.2, conf.int = conf.int.2, 
-  #                                    p.val = p.val.2, conf.level = conf.level)
-  
   CI.lower.colname <- paste((1 - conf.level) / 2 * 100, "%")
   CI.upper.colname <- paste(100 - (1 - conf.level) / 2 * 100, "%")
   
