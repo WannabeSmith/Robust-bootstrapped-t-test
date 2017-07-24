@@ -204,8 +204,8 @@ robust.boot.t.combined <- function(x, y, n.boot, n.cores = 1, conf.level = 0.95)
 
 #' Perform robust bootstrapped t-tests
 #' 
-#' Perform robust bootstrapped t-tests that aim to better control type-I errors when comparing means
-#' of non-negative distributions with excess zero observations.
+#' Perform robust bootstrapped t-tests that aim to better control type-I error rates 
+#' when comparing means of non-negative distributions with excess zero observations.
 #'
 #' @importFrom parallel mclapply
 #' @importFrom stats var
