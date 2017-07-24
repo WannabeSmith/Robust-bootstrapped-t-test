@@ -24,7 +24,8 @@ robust.boot.t(x, y, n.boot, n.cores = 1, method = "combined",
 p-value of the test
 }
 \description{
-Perform robust bootstrapped t-tests
+Perform robust bootstrapped t-tests that aim to better control type-I errors when comparing means
+of non-negative distributions with excess zero observations.
 }
 \examples{
 robust.boot.t(rnorm(20, 0, 1), rnorm(30, 1, 1), n.boot = 999)
