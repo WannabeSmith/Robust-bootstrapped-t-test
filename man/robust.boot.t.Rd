@@ -4,7 +4,8 @@
 \alias{robust.boot.t}
 \title{Perform robust bootstrapped t-tests}
 \usage{
-robust.boot.t(x, y, n.boot, n.cores = 1, method = "combined")
+robust.boot.t(x, y, n.boot, n.cores = 1, method = "combined",
+  conf.level = 0.95)
 }
 \arguments{
 \item{x}{a (non-empty) numeric vector of data values.}
