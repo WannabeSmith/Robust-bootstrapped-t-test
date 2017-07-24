@@ -17,6 +17,8 @@ robust.boot.t(x, y, n.boot, n.cores = 1, method = "combined",
 \item{n.cores}{number of cores to use for parallelization. Defaults to 1. If using Windows, set n.cores = 1.}
 
 \item{method}{Which robust bootstrapped t-test to perform. Set 'method = 1' for method 1, 'method = 1' for method 2, and 'method = "both"' to perform methods 1 and 2 simultaneously.}
+
+\item{conf.level}{Desired confidence level for computing confidence intervals: a number between 0 and 1.}
 }
 \value{
 p-value of the test

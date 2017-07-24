@@ -211,11 +211,14 @@ robust.boot.t.combined <- function(x, y, n.boot, n.cores = 1, conf.level = 0.95)
 #'
 #' @importFrom parallel mclapply
 #' @importFrom stats var
+#' @importFrom stats quantile
+#' @importFrom data.table setnames
 #' @param x a (non-empty) numeric vector of data values.
 #' @param y a (non-empty) numeric vector of data values.
 #' @param n.boot number of bootstrap resamples to perform
 #' @param n.cores number of cores to use for parallelization. Defaults to 1. If using Windows, set n.cores = 1.
 #' @param method Which robust bootstrapped t-test to perform. Set 'method = 1' for method 1, 'method = 1' for method 2, and 'method = "both"' to perform methods 1 and 2 simultaneously.
+#' @param conf.level Desired confidence level for computing confidence intervals: a number between 0 and 1.
 #' @return p-value of the test
 #' @export
 #' @examples
