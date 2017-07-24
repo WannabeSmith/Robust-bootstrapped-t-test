@@ -5,7 +5,7 @@ Authors@R: c(
   person("Ian", "Waudby-Smith", email = "iwaudbysmith@gmail.com", role = c("aut", "cre")),
   person("Pengfei", "Li", email = "pengfei.li@uwaterloo.ca", role = "aut")
   )  
-Description: What the package does (one paragraph).
+Description: In datasets whose data-generating distributions are non-negative with excess zero observations, it can be difficult to find general-purpose statistical tests for comparing the means of these distributions while controlling type-I error. This R package allows users to perform a modified t-test that better controls type-I error in these particular datasets. 
 Depends: R (>= 3.4.0)
 Imports:
   stats,
