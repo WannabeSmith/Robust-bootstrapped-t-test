@@ -162,7 +162,7 @@ robust.boot.t.combined <- function(x, y, n.boot, n.cores = 1, conf.level = 0.95)
   t.1 <- get.t.stat(x, y, var.equal = TRUE)
   t.2 <- get.t.stat(x, y, var.equal = FALSE)
   
-  p.val.1 <- p.val <- sum(abs(boot.t.vals[,1]) > abs(t.1)) / n.boot
+  p.val.1 <- sum(abs(boot.t.vals[,1]) > abs(t.1)) / n.boot
   conf.int.1 <- quantile(boot.t.vals, probs = c((1 - conf.level) / 2, 1 - (1 - conf.level) / 2))
   conf.int.1 <- mean(x) - mean(y) + conf.int.1 * get.std.err(x, y, var.equal = TRUE)
   
