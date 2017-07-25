@@ -258,7 +258,7 @@ robust.boot.t <- function(x, y, n.boot, n.cores = 1, method = "combined", conf.l
   else 
   {
     stop("Invalid method specification.\n
-         Use \"method = 1\" or \"method = 2\" or \"method = \'both\'\"")  
+         Use \"method = 1\" or \"method = 2\" or \"method = \'combined\'\"")  
   }
   
   return(output)
