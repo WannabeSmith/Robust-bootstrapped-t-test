@@ -6,7 +6,7 @@ Authors@R: c(
   person("Pengfei", "Li", email = "pengfei.li@uwaterloo.ca", role = "aut")
   )  
 Description: In datasets whose data-generating distributions are non-negative with excess zero observations, it can be difficult to find general-purpose statistical tests for comparing sample means while controlling type-I error rates. This R package allows users to perform a modified bootstrap-based t-test that aims to better control type-I error rates in these particular datasets. 
-Depends: R (>= 3.4.0)
+Depends: R (>= 3.3.0)
 Imports:
   stats,
   data.table,
