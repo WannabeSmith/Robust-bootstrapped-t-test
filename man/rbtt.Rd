@@ -20,10 +20,18 @@ rbtt(x, y, n.boot, n.cores = 1, method = "combined", conf.level = 0.95)
 \item{conf.level}{Desired confidence level for computing confidence intervals: a number between 0 and 1.}
 }
 \value{
-p-value of the test
+A list (or two lists in the case of method = "combined") containing the following components:\cr
+\item{statistic}{the value of the t-statistic.}
+\item{p.value}{the p-value for the test.}
+\item{conf.int}{a bootstrap-based confidence interval for the difference in means.}
+\item{estimate}{the estimated difference in means.}
+\item{null.value}{the hypothesized value of the mean difference, zero.}
+\item{alternative}{a character string describing the alternative hypothesis.}
+\item{method}{a character string describing the type of two-sample bootstrapped t-test used}
+\item{data.name}{a character string giving the names of the data}
 }
 \description{
-Perform robust bootstrapped t-tests that aim to better control type-I error rates
+Perform robust bootstrapped two-sample t-tests that aim to better control type-I error rates
 when comparing means of non-negative distributions with excess zero observations.
 }
 \examples{

@@ -200,7 +200,7 @@ rbtt.combined <- function(x, y, n.boot, n.cores = 1, conf.level = 0.95, x.name, 
 
 #' Perform robust bootstrapped t-tests
 #'
-#' Perform robust bootstrapped t-tests that aim to better control type-I error rates
+#' Perform robust bootstrapped two-sample t-tests that aim to better control type-I error rates
 #' when comparing means of non-negative distributions with excess zero observations.
 #'
 #' @importFrom parallel mclapply
@@ -213,7 +213,15 @@ rbtt.combined <- function(x, y, n.boot, n.cores = 1, conf.level = 0.95, x.name, 
 #' @param n.cores number of cores to use for parallelization. Defaults to 1. If using Windows, set n.cores = 1.
 #' @param method Which robust bootstrapped t-test to perform. Set `method=1’ for a two-sample t-test under the equal variance assumption, 'method = 2' for a two-sample t-test without the equal variance assumption, and 'method = "both"' to perform both methods simultaneously.
 #' @param conf.level Desired confidence level for computing confidence intervals: a number between 0 and 1.
-#' @return p-value of the test
+#' @return A list (or two lists in the case of method = "combined") containing the following components:\cr
+#' \item{statistic}{the value of the t-statistic.}
+#' \item{p.value}{the p-value for the test.}
+#' \item{conf.int}{a bootstrap-based confidence interval for the difference in means.}
+#' \item{estimate}{the estimated difference in means.}
+#' \item{null.value}{the hypothesized value of the mean difference, zero.}
+#' \item{alternative}{a character string describing the alternative hypothesis.}
+#' \item{method}{a character string describing the type of two-sample bootstrapped t-test used}
+#' \item{data.name}{a character string giving the names of the data}
 #' @export
 #' @examples
 #' x=rbinom(50,1,0.5)*rlnorm(50,0,1)
