@@ -225,7 +225,7 @@ rbtt.combined <- function(x, y, n.boot, n.cores = 1, conf.level = 0.95, x.name, 
 #' @export
 #' @examples
 #' x=rbinom(50,1,0.5)*rlnorm(50,0,1)
-#' y=rbinom(50,1,0.3)*rlnorm(150,2,1)
+#' y=rbinom(150,1,0.3)*rlnorm(150,2,1)
 #'
 #' rbtt(x, y, n.boot=999)
 #'
