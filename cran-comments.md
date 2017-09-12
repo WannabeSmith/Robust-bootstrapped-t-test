@@ -1,6 +1,6 @@
 ## Test environments
-* local Fedora 25 install, R 3.4.0
-* Ubuntu 12.04, R 3.4.0 (on Travis-CI)
+* local Fedora 25 install, R 3.4.1
+* Ubuntu 14.04, R 3.4.1 (on Travis-CI)
 * Windows (using win-builder, devel and release)
 
 ## R CMD check results
