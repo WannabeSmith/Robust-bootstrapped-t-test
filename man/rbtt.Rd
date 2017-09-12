@@ -15,7 +15,7 @@ rbtt(x, y, n.boot, n.cores = 1, method = "combined", conf.level = 0.95)
 
 \item{n.cores}{number of cores to use for parallelization. Defaults to 1. If using Windows, set n.cores = 1.}
 
-\item{method}{Which robust bootstrapped t-test to perform. Set 'method = 1' for method 1, 'method = 1' for method 2, and 'method = "both"' to perform methods 1 and 2 simultaneously.}
+\item{method}{Which robust bootstrapped t-test to perform. Set `method=1’ for a two-sample t-test under the equal variance assumption, 'method = 2' for a two-sample t-test without the equal variance assumption, and 'method = "both"' to perform both methods simultaneously.}
 
 \item{conf.level}{Desired confidence level for computing confidence intervals: a number between 0 and 1.}
 }
@@ -27,6 +27,8 @@ Perform robust bootstrapped t-tests that aim to better control type-I error rate
 when comparing means of non-negative distributions with excess zero observations.
 }
 \examples{
-rbtt(rnorm(20, 0, 1), rnorm(30, 1, 1), n.boot = 999)
-rbtt(rnorm(20, 0, 1), rnorm(30, 5, 1), n.boot = 9999, n.cores = 2)
+x=rbinom(50,1,0.5)*rlnorm(50,0,1)
+y=rbinom(50,1,0.3)*rlnorm(150,2,1)
+rbtt(x,y,n.boot=999)
+rbtt(x,y,n.boot=9999,n.cores=2)
 }

@@ -215,13 +215,15 @@ rbtt.combined <- function(x, y, n.boot, n.cores = 1, conf.level = 0.95)
 #' @param y a (non-empty) numeric vector of data values.
 #' @param n.boot number of bootstrap resamples to perform
 #' @param n.cores number of cores to use for parallelization. Defaults to 1. If using Windows, set n.cores = 1.
-#' @param method Which robust bootstrapped t-test to perform. Set 'method = 1' for method 1, 'method = 1' for method 2, and 'method = "both"' to perform methods 1 and 2 simultaneously.
+#' @param method Which robust bootstrapped t-test to perform. Set `method=1’ for a two-sample t-test under the equal variance assumption, 'method = 2' for a two-sample t-test without the equal variance assumption, and 'method = "both"' to perform both methods simultaneously.
 #' @param conf.level Desired confidence level for computing confidence intervals: a number between 0 and 1.
 #' @return p-value of the test
 #' @export
 #' @examples
-#' rbtt(rnorm(20, 0, 1), rnorm(30, 1, 1), n.boot = 999)
-#' rbtt(rnorm(20, 0, 1), rnorm(30, 5, 1), n.boot = 9999, n.cores = 2)
+#' x=rbinom(50,1,0.5)*rlnorm(50,0,1)
+#' y=rbinom(50,1,0.3)*rlnorm(150,2,1)
+#' rbtt(x,y,n.boot=999)
+#' rbtt(x,y,n.boot=9999,n.cores=2)
 rbtt <- function(x, y, n.boot, n.cores = 1, method = "combined", conf.level = 0.95)
 {
   if (Sys.info()['sysname'] == "Windows" && n.cores > 1)
