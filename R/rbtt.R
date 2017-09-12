@@ -222,8 +222,18 @@ rbtt.combined <- function(x, y, n.boot, n.cores = 1, conf.level = 0.95)
 #' @examples
 #' x=rbinom(50,1,0.5)*rlnorm(50,0,1)
 #' y=rbinom(50,1,0.3)*rlnorm(150,2,1)
-#' rbtt(x,y,n.boot=999)
-#' rbtt(x,y,n.boot=9999,n.cores=2)
+#'
+#' rbtt(x, y, n.boot=999)
+#'
+#' # Use 9999 bootstrap resamples on 2 cores
+#' rbtt(x, y, n.boot=9999, n.cores=2)
+#'
+#' # Use methods 1 or 2 individually
+#' rbtt(x, y, n.boot = 999, method = 1)
+#' rbtt(x, y, n.boot = 999, method = 2)
+#'
+#' # Use a confidence level of 0.99
+#' rbtt(x, y, n.boot = 999, conf.level = 0.99)
 rbtt <- function(x, y, n.boot, n.cores = 1, method = "combined", conf.level = 0.95)
 {
   if (Sys.info()['sysname'] == "Windows" && n.cores > 1)
