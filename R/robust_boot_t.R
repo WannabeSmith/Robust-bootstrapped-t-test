@@ -5,7 +5,7 @@ get.std.err <- function(x, y, var.equal = FALSE)
 {
   n1 <- length(x)
   n2 <- length(y)
-  
+
   if(var.equal)
   {
     s_p <- sqrt(((n1 - 1) * var(x) + (n2 - 1) * var(y)) / (n1 + n2 - 2))
@@ -40,7 +40,7 @@ get.ttest.output <- function(x, y, method, t, conf.int, p.val, conf.level)
   estimate <- c(mx, my)
   names(estimate) <- c("mean of x","mean of y")
   method.str <- paste("Method ", method)
-  
+
   if (method == 1)
   {
     alternative <- "two.sided"
@@ -56,10 +56,10 @@ get.ttest.output <- function(x, y, method, t, conf.int, p.val, conf.level)
       alternative <- "less"
     }
   }
-  
+
   names(t) <- "t"
   attr(conf.int, "conf.level") <- conf.level
-  
+
   rval <- list(statistic = t, p.value = p.val,
                conf.int = conf.int, estimate = estimate, null.value = mu,
                alternative = alternative,
@@ -68,55 +68,55 @@ get.ttest.output <- function(x, y, method, t, conf.int, p.val, conf.level)
   return(rval)
 }
 
-robust.boot.t.1 <- function(x, y, n.boot, n.cores = 1, conf.level)
+rbtt.1 <- function(x, y, n.boot, n.cores = 1, conf.level)
 {
   arguments <- as.list(match.call())
-  
+
   x.star <- x / mean(x)
   y.star <- y / mean(y)
-  
-  boot.t.vals.list <- mclapply(seq(1:n.boot), function(i) 
+
+  boot.t.vals.list <- mclapply(seq(1:n.boot), function(i)
   {
     boot.x <- sample(x.star, size = length(x.star), replace = TRUE)
     boot.y <- sample(y.star, size = length(y.star), replace = TRUE)
-    
+
     t.boot <- get.t.stat(boot.x, boot.y, var.equal = TRUE)
     return(t.boot)
   }, mc.cores = n.cores)
-  
+
   boot.t.vals <- unlist(boot.t.vals.list)
-  
+
   t <- get.t.stat(x, y, var.equal = TRUE)
   p.val <- sum(abs(boot.t.vals) > abs(t)) / n.boot
   conf.int <- quantile(boot.t.vals, probs = c((1 - conf.level) / 2, 1 - (1 - conf.level) / 2))
   conf.int <- mean(x) - mean(y) + conf.int * get.std.err(x, y, var.equal = TRUE)
-  
-  return(get.ttest.output(x = x, y = y, method = 1, t = t, conf.int = conf.int, 
+
+  return(get.ttest.output(x = x, y = y, method = 1, t = t, conf.int = conf.int,
                           p.val = p.val, conf.level = conf.level))
 }
 
-robust.boot.t.2 <- function(x, y, n.boot, n.cores = 1, conf.level)
+rbtt.2 <- function(x, y, n.boot, n.cores = 1, conf.level)
 {
   arguments <- as.list(match.call())
 
   x.star <- x / mean(x)
   y.star <- y / mean(y)
-  
+
   x.y.star <- c(x.star, y.star)
-  
-  boot.t.vals.list <- mclapply(seq(1:n.boot), function(i) 
+
+  boot.t.vals.list <- mclapply(seq(1:n.boot), function(i)
   {
     boot.x <- sample(x.y.star, size = length(x.star), replace = TRUE)
     boot.y <- sample(x.y.star, size = length(y.star), replace = TRUE)
-    
+
     t.boot <- get.t.stat(boot.x, boot.y, var.equal = FALSE)
     return(t.boot)
   }, mc.cores = n.cores)
-  
+
   boot.t.vals <- unlist(boot.t.vals.list)
-  
+
   t <- get.t.stat(x, y, var.equal = FALSE)
-  
+
   if (t > 0)
   {
     p.val <- 2 * (sum(boot.t.vals > t) / n.boot)
@@ -129,43 +129,43 @@ robust.boot.t.2 <- function(x, y, n.boot, n.cores = 1, conf.level)
     q <- quantile(boot.t.vals, probs = c((1 - conf.level) / 2))
     conf.int <- c(q, -q)
   }
-  
+
   conf.int <- mean(x) - mean(y) + conf.int * get.std.err(x, y, var.equal = FALSE)
-  return(get.ttest.output(x = x, y = y, method = 2, t = t, conf.int = conf.int, 
+  return(get.ttest.output(x = x, y = y, method = 2, t = t, conf.int = conf.int,
                           p.val = p.val, conf.level = conf.level))
 }
 
-robust.boot.t.combined <- function(x, y, n.boot, n.cores = 1, conf.level = 0.95)
+rbtt.combined <- function(x, y, n.boot, n.cores = 1, conf.level = 0.95)
 {
   arguments <- as.list(match.call())
-  
+
   x.star <- x / mean(x)
   y.star <- y / mean(y)
-  
+
   x.y.star <- c(x.star, y.star)
-  
-  boot.t.vals.list <- mclapply(seq(1:n.boot), function(i) 
+
+  boot.t.vals.list <- mclapply(seq(1:n.boot), function(i)
   {
     boot.x.1 <- sample(x.star, size = length(x.star), replace = TRUE)
     boot.y.1 <- sample(y.star, size = length(y.star), replace = TRUE)
     boot.x.2 <- sample(x.y.star, size = length(x.star), replace = TRUE)
     boot.y.2 <- sample(x.y.star, size = length(y.star), replace = TRUE)
-    
+
     t.boot.1 <- get.t.stat(boot.x.1, boot.y.1, var.equal = TRUE)
     t.boot.2 <- get.t.stat(boot.x.2, boot.y.2, var.equal = FALSE)
-    
+
     return(c(t.boot.1, t.boot.2))
   }, mc.cores = n.cores)
-  
+
   boot.t.vals <- do.call(rbind, boot.t.vals.list)
-  
+
   t.1 <- get.t.stat(x, y, var.equal = TRUE)
   t.2 <- get.t.stat(x, y, var.equal = FALSE)
-  
+
   p.val.1 <- sum(abs(boot.t.vals[,1]) > abs(t.1)) / n.boot
   conf.int.1 <- quantile(boot.t.vals, probs = c((1 - conf.level) / 2, 1 - (1 - conf.level) / 2))
   conf.int.1 <- mean(x) - mean(y) + conf.int.1 * get.std.err(x, y, var.equal = TRUE)
-  
+
   if (t.2 > 0)
   {
     p.val.2 <- 2 * (sum(boot.t.vals[,2] > t.2) / n.boot)
@@ -178,33 +178,33 @@ robust.boot.t.combined <- function(x, y, n.boot, n.cores = 1, conf.level = 0.95)
     q.2 <- quantile(boot.t.vals, probs = c((1 - conf.level) / 2))
     conf.int.2 <- c(q.2, -q.2)
   }
-  
+
   conf.int.2 <- mean(x) - mean(y) + conf.int.2 * get.std.err(x, y, var.equal = FALSE)
-  
+
   p.val.table <- c("t1" = p.val.1, "t2" = p.val.2)
-  
+
   CI.lower.colname <- paste((1 - conf.level) / 2 * 100, "%")
   CI.upper.colname <- paste(100 - (1 - conf.level) / 2 * 100, "%")
-  
+
   output.table <- data.frame("statistic" = c(t.1, t.2),
                              "p-value" = c(p.val.1, p.val.2),
                              CI.lower = c(conf.int.1[1][[1]], conf.int.2[1][[1]]),
                              CI.upper = c(conf.int.1[2][[1]], conf.int.2[2][[1]]),
                              "mean.x" = mean(x),
                              "mean.y" = mean(y))
-  
+
   setnames(output.table, old = "CI.lower", CI.lower.colname)
   setnames(output.table, old = "CI.upper", CI.upper.colname)
-  
+
   output.table <- round(output.table, digits = 4)
   row.names(output.table) <- c("Method 1", "Method 2")
-  
+
   return(output.table)
 }
 
 #' Perform robust bootstrapped t-tests
-#' 
-#' Perform robust bootstrapped t-tests that aim to better control type-I error rates 
+#'
+#' Perform robust bootstrapped t-tests that aim to better control type-I error rates
 #' when comparing means of non-negative distributions with excess zero observations.
 #'
 #' @importFrom parallel mclapply
@@ -220,22 +220,22 @@ robust.boot.t.combined <- function(x, y, n.boot, n.cores = 1, conf.level = 0.95)
 #' @return p-value of the test
 #' @export
 #' @examples
-#' robust.boot.t(rnorm(20, 0, 1), rnorm(30, 1, 1), n.boot = 999)
-#' robust.boot.t(rnorm(20, 0, 1), rnorm(30, 5, 1), n.boot = 9999, n.cores = 2)
-robust.boot.t <- function(x, y, n.boot, n.cores = 1, method = "combined", conf.level = 0.95)
+#' rbtt(rnorm(20, 0, 1), rnorm(30, 1, 1), n.boot = 999)
+#' rbtt(rnorm(20, 0, 1), rnorm(30, 5, 1), n.boot = 9999, n.cores = 2)
+rbtt <- function(x, y, n.boot, n.cores = 1, method = "combined", conf.level = 0.95)
 {
   if (Sys.info()['sysname'] == "Windows" && n.cores > 1)
   {
     warning("Multi-core processing is not supported on Windows. Setting n.cores to 1.")
     n.cores <- 1
   }
-  
+
   if (method == "combined")
   {
-    output <- robust.boot.t.combined(x, y, n.boot = n.boot, n.cores = n.cores, conf.level = conf.level)
+    output <- rbtt.combined(x, y, n.boot = n.boot, n.cores = n.cores, conf.level = conf.level)
     x.name <- deparse(substitute(x))
     y.name <- deparse(substitute(y))
-    
+
     output$x.name <- x.name
     output$y.name <- y.name
   }
@@ -243,24 +243,24 @@ robust.boot.t <- function(x, y, n.boot, n.cores = 1, method = "combined", conf.l
   {
     if (method == 1)
     {
-      output <- robust.boot.t.1(x, y, n.boot = n.boot, n.cores = n.cores, conf.level = conf.level)
+      output <- rbtt.1(x, y, n.boot = n.boot, n.cores = n.cores, conf.level = conf.level)
     }
     else
     {
-      output <- robust.boot.t.2(x, y, n.boot = n.boot, n.cores = n.cores, conf.level = conf.level)
+      output <- rbtt.2(x, y, n.boot = n.boot, n.cores = n.cores, conf.level = conf.level)
     }
-    
+
     dname <- paste(deparse(substitute(x)),"and",
                    deparse(substitute(y)))
-    
+
     output$data.name <- dname
   }
-  else 
+  else
   {
     stop("Invalid method specification.\n
-         Use \"method = 1\" or \"method = 2\" or \"method = \'combined\'\"")  
+         Use \"method = 1\" or \"method = 2\" or \"method = \'combined\'\"")
   }
-  
+
   return(output)
 }
 

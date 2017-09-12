@@ -1,4 +1,4 @@
-Package: Robust.bootstrapped.t.test
+Package: rbtt 
 Title: Alternative Bootstrap-Based t-Test Aiming to Reduce Type-I Error in Particular Sets of Data 
 Version: 0.0.0
 Authors@R: c(
