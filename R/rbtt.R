@@ -29,17 +29,26 @@ get.t.stat <- function(x, y, var.equal = FALSE)
   return((mean(x) - mean(y)) / std.err)
 }
 
-get.ttest.output <- function(x, y, method, t, conf.int, p.val, conf.level)
+get.ttest.output <- function(x, y, method, t, conf.int, p.val, conf.level, x.name = NULL, y.name = NULL)
 {
-  dname <- paste(deparse(substitute(x)),"and",
-                 deparse(substitute(y)))
+  if (is.null(x.name) || is.null(y.name))
+  {
+    dname <- paste(deparse(substitute(x)),"and",
+                   deparse(substitute(y)))
+  }
+  else
+  {
+    dname <- paste(x.name, "and", y.name)
+  }
+
   mx <- mean(x)
   my <- mean(y)
   mu <- 0
   names(mu) <- "difference in means"
   estimate <- c(mx, my)
   names(estimate) <- c("mean of x","mean of y")
-  method.str <- paste("Method ", method)
+  if (method == 1) method.str = "Two-sided robust bootstrapped t-test assuming equal variance"
+  else method.str = "One-sided robust bootstrapped t-test not assuming equal variance"
 
   if (method == 1)
   {
@@ -135,7 +144,7 @@ rbtt.2 <- function(x, y, n.boot, n.cores = 1, conf.level)
                           p.val = p.val, conf.level = conf.level))
 }
 
-rbtt.combined <- function(x, y, n.boot, n.cores = 1, conf.level = 0.95)
+rbtt.combined <- function(x, y, n.boot, n.cores = 1, conf.level = 0.95, x.name, y.name)
 {
   arguments <- as.list(match.call())
 
@@ -181,25 +190,12 @@ rbtt.combined <- function(x, y, n.boot, n.cores = 1, conf.level = 0.95)
 
   conf.int.2 <- mean(x) - mean(y) + conf.int.2 * get.std.err(x, y, var.equal = FALSE)
 
-  p.val.table <- c("t1" = p.val.1, "t2" = p.val.2)
+  output.1 <- get.ttest.output(x = x, y = y, method = 1, t = t.1, conf.int = conf.int.1, p.val = p.val.1,
+                               conf.level = conf.level, x.name = x.name, y.name = y.name)
+  output.2 <- get.ttest.output(x = x, y = y, method = 2, t = t.2, conf.int = conf.int.2, p.val = p.val.2,
+                               conf.level = conf.level, x.name = x.name, y.name = y.name)
 
-  CI.lower.colname <- paste((1 - conf.level) / 2 * 100, "%")
-  CI.upper.colname <- paste(100 - (1 - conf.level) / 2 * 100, "%")
-
-  output.table <- data.frame("statistic" = c(t.1, t.2),
-                             "p-value" = c(p.val.1, p.val.2),
-                             CI.lower = c(conf.int.1[1][[1]], conf.int.2[1][[1]]),
-                             CI.upper = c(conf.int.1[2][[1]], conf.int.2[2][[1]]),
-                             "mean.x" = mean(x),
-                             "mean.y" = mean(y))
-
-  setnames(output.table, old = "CI.lower", CI.lower.colname)
-  setnames(output.table, old = "CI.upper", CI.upper.colname)
-
-  output.table <- round(output.table, digits = 4)
-  row.names(output.table) <- c("Method 1", "Method 2")
-
-  return(output.table)
+  return(list(output.1, output.2))
 }
 
 #' Perform robust bootstrapped t-tests
@@ -244,12 +240,10 @@ rbtt <- function(x, y, n.boot, n.cores = 1, method = "combined", conf.level = 0.
 
   if (method == "combined")
   {
-    output <- rbtt.combined(x, y, n.boot = n.boot, n.cores = n.cores, conf.level = conf.level)
     x.name <- deparse(substitute(x))
     y.name <- deparse(substitute(y))
-
-    output$x.name <- x.name
-    output$y.name <- y.name
+    output <- rbtt.combined(x, y, n.boot = n.boot, n.cores = n.cores,
+                            conf.level = conf.level, x.name = x.name, y.name = y.name)
   }
   else if (method == 1 || method == 2)
   {
