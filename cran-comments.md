@@ -3,5 +3,8 @@
 * Ubuntu 14.04, R 3.4.1 (on Travis-CI)
 * Windows, R (unstable and 3.4.1) (using win-builder, devel and release)
 
-## R CMD check results
+## R CMD check results (Fedora and Ubuntu)
 0 errors | 0 warnings | 0 notes
+
+## R CMD check results (Windows)
+0 errors | 0 warnings | 1 note
