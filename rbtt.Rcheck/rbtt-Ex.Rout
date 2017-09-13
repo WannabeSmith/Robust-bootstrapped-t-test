@@ -1,0 +1,191 @@
+
+R version 3.4.1 (2017-06-30) -- "Single Candle"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-redhat-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "rbtt"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> base::assign(".ExTimings", "rbtt-Ex.timings", pos = 'CheckExEnv')
+> base::cat("name\tuser\tsystem\telapsed\n", file=base::get(".ExTimings", pos = 'CheckExEnv'))
+> base::assign(".format_ptime",
++ function(x) {
++   if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]
++   if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]
++   options(OutDec = '.')
++   format(x[1L:3L], digits = 7L)
++ },
++ pos = 'CheckExEnv')
+> 
+> ### * </HEADER>
+> library('rbtt')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("rbtt")
+> ### * rbtt
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: rbtt
+> ### Title: Perform robust bootstrapped t-tests
+> ### Aliases: rbtt
+> 
+> ### ** Examples
+> 
+> x=rbinom(50,1,0.5)*rlnorm(50,0,1)
+> y=rbinom(150,1,0.3)*rlnorm(150,2,1)
+> 
+> rbtt(x, y, n.boot=999)
+[[1]]
+
+	Two-sided robust bootstrapped t-test assuming equal variance
+
+data:  x and y
+t = -1.9461, p-value = 0.04004
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -4.67803963 -0.06764034
+sample estimates:
+mean of x mean of y 
+0.9988797 3.2469123 
+
+
+[[2]]
+
+	One-sided robust bootstrapped t-test not assuming equal variance
+
+data:  x and y
+t = -3.1169, p-value = 0.01201
+alternative hypothesis: true difference in means is less than 0
+95 percent confidence interval:
+ -3.7652724 -0.7307927
+sample estimates:
+mean of x mean of y 
+0.9988797 3.2469123 
+
+
+> 
+> # Use 9999 bootstrap resamples on 2 cores
+> rbtt(x, y, n.boot=9999, n.cores=2)
+[[1]]
+
+	Two-sided robust bootstrapped t-test assuming equal variance
+
+data:  x and y
+t = -1.9461, p-value = 0.0368
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -4.71272906 -0.08286129
+sample estimates:
+mean of x mean of y 
+0.9988797 3.2469123 
+
+
+[[2]]
+
+	One-sided robust bootstrapped t-test not assuming equal variance
+
+data:  x and y
+t = -3.1169, p-value = 0.0178
+alternative hypothesis: true difference in means is less than 0
+95 percent confidence interval:
+ -3.7869317 -0.7091334
+sample estimates:
+mean of x mean of y 
+0.9988797 3.2469123 
+
+
+> 
+> # Use methods 1 or 2 individually
+> rbtt(x, y, n.boot = 999, method = 1)
+
+	Two-sided robust bootstrapped t-test assuming equal variance
+
+data:  x and y
+t = -1.9461, p-value = 0.03003
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -4.03473324 -0.01366016
+sample estimates:
+mean of x mean of y 
+0.9988797 3.2469123 
+
+> rbtt(x, y, n.boot = 999, method = 2)
+
+	One-sided robust bootstrapped t-test not assuming equal variance
+
+data:  x and y
+t = -3.1169, p-value = 0.02002
+alternative hypothesis: true difference in means is less than 0
+95 percent confidence interval:
+ -4.1376570 -0.3584081
+sample estimates:
+mean of x mean of y 
+0.9988797 3.2469123 
+
+> 
+> # Use a confidence level of 0.99
+> rbtt(x, y, n.boot = 999, conf.level = 0.99)
+[[1]]
+
+	Two-sided robust bootstrapped t-test assuming equal variance
+
+data:  x and y
+t = -1.9461, p-value = 0.02803
+alternative hypothesis: true difference in means is not equal to 0
+99 percent confidence interval:
+ -5.5984216  0.5388435
+sample estimates:
+mean of x mean of y 
+0.9988797 3.2469123 
+
+
+[[2]]
+
+	One-sided robust bootstrapped t-test not assuming equal variance
+
+data:  x and y
+t = -3.1169, p-value = 0.01401
+alternative hypothesis: true difference in means is less than 0
+99 percent confidence interval:
+ -4.3399375 -0.1561276
+sample estimates:
+mean of x mean of y 
+0.9988797 3.2469123 
+
+
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("rbtt", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> ### * <FOOTER>
+> ###
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  0.665 0.013 1.472 0.762 0.024 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')
