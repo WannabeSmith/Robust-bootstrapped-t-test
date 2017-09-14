@@ -9,6 +9,8 @@ This is a resubmission. In this version I have:
 
 Note that 'R CMD check --as-cran' sees the DOI as invalid (due to a '>' character being part of the DOI). However, I think it is correct.
 
+This was causing my submission to fail. Therefore, I have instead used a 'PMID', a unique ID for PubMed articles.
+
 ## Test environments
 * local Fedora 25 install, R 3.4.1
 * Ubuntu 14.04, R 3.4.1 (on Travis-CI)
