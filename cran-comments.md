@@ -1,13 +1,15 @@
 ## Resubmission
 This is a resubmission. In this version I have:
 
-* Changed the version number from '0.0.0' to '0.1.0' 
+* Changed the version number from '0.0.0' to '0.1.0'
 
 * Omitted the redundant 'R' in 'R package'.
 
 * Included a reference
 
-Note that 'R CMD check --as-cran' sees the DOI as invalid (due to a '>' character being part of the DOI). However, I think it is correct.
+Note that 'R CMD check --as-cran' saw the DOI as invalid (due to a '>' character being part of the DOI). The DOI is as follows:
+
+10.1002/(SICI)1097-0258(19991030)18:20<2749::AID-SIM195>3.0.CO;2-C
 
 This was causing my submission to fail. Therefore, I have instead used a 'PMID', a unique ID for PubMed articles.
 
@@ -28,4 +30,4 @@ This was causing my submission to fail. Therefore, I have instead used a 'PMID',
 Specific note on Windows R-devel:
 "Examples with CPU or elapsed time > 10s"
 
-This isn't too unusual since I am running some examples with 9999 bootstrap resamples and the function 'mclapply' in the 'parallel' package is not supported on Windows. Therefore, these 9999 resamples are running on a single core.  
+This isn't too unusual since I am running some examples with 9999 bootstrap resamples and the function 'mclapply' in the 'parallel' package is not supported on Windows. Therefore, these 9999 resamples are running on a single core.
