@@ -6,6 +6,7 @@ This is a resubmission. In this version I have:
 * Omitted the redundant 'R' in 'R package'.
 
 * Included a reference
+
 Note that 'R CMD check --as-cran' sees the DOI as invalid (due to a '>' character being part of the DOI). However, I think it is correct.
 
 ## Test environments
