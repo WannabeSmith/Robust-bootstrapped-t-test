@@ -11,8 +11,6 @@ Note that 'R CMD check --as-cran' saw the DOI as invalid (due to a '>' character
 
 10.1002/(SICI)1097-0258(19991030)18:20<2749::AID-SIM195>3.0.CO;2-C
 
-This was causing my submission to fail. Therefore, I have instead used a 'PMID', a unique ID for PubMed articles.
-
 ## Test environments
 * local Fedora 25 install, R 3.4.1
 * Ubuntu 14.04, R 3.4.1 (on Travis-CI)
