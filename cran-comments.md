@@ -7,7 +7,7 @@ This is a resubmission. In this version I have:
 
 * Included a reference
 
-Note that 'R CMD check --as-cran' saw the DOI as invalid (due to a '>' character being part of the DOI). The DOI is as follows:
+Note that 'R CMD check --as-cran' sees the DOI as invalid (due to a '>' character being part of the DOI). The DOI is as follows:
 
 10.1002/(SICI)1097-0258(19991030)18:20<2749::AID-SIM195>3.0.CO;2-C
 
@@ -23,9 +23,4 @@ Note that 'R CMD check --as-cran' saw the DOI as invalid (due to a '>' character
 0 errors | 0 warnings | 1 note
 
 ## R CMD check results (Windows R-devel)
-0 errors | 0 warnings | 2 notes
-
-Specific note on Windows R-devel:
-"Examples with CPU or elapsed time > 10s"
-
-This isn't too unusual since I am running some examples with 9999 bootstrap resamples and the function 'mclapply' in the 'parallel' package is not supported on Windows. Therefore, these 9999 resamples are running on a single core.
+0 errors | 0 warnings | 1 note
