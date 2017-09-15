@@ -229,8 +229,8 @@ rbtt.combined <- function(x, y, n.boot, n.cores = 1, conf.level = 0.95, x.name, 
 #'
 #' rbtt(x, y, n.boot=999)
 #'
-#' # Use 9999 bootstrap resamples on 2 cores
-#' rbtt(x, y, n.boot=9999, n.cores=2)
+#' # Perform bootstrap resamples on 2 cores
+#' rbtt(x, y, n.boot=999, n.cores=2)
 #'
 #' # Use methods 1 or 2 individually
 #' rbtt(x, y, n.boot = 999, method = 1)

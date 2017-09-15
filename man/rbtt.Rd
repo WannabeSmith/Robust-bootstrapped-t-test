@@ -40,8 +40,8 @@ y=rbinom(150,1,0.3)*rlnorm(150,2,1)
 
 rbtt(x, y, n.boot=999)
 
-# Use 9999 bootstrap resamples on 2 cores
-rbtt(x, y, n.boot=9999, n.cores=2)
+# Perform bootstrap resamples on 2 cores
+rbtt(x, y, n.boot=999, n.cores=2)
 
 # Use methods 1 or 2 individually
 rbtt(x, y, n.boot = 999, method = 1)
