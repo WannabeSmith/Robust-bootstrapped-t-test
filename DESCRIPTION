@@ -1,5 +1,5 @@
 Package: rbtt 
-Title: Alternative Bootstrap-Based t-Test Aiming to Reduce Type-I Error in Particular Sets of Data 
+Title: Alternative Bootstrap-Based t-Test Aiming to Reduce Type-I Error for Non-Negative, Zero-Inflated Data 
 Version: 0.1.0
 Authors@R: c(
   person("Ian", "Waudby-Smith", email = "iwaudbysmith@gmail.com", role = c("aut", "cre")),

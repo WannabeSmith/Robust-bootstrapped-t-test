@@ -1,7 +1,7 @@
 ## Resubmission
 This is a resubmission. In this version I have:
 
-* Changed the '<' and '>' characters in the DOI (referenced in the DESCRIPTION file) to '%3C' and '%3E' respectively. The DOI is now properly recognized.
+* Changed the title of the package to be more informative: writing 'Zero-Inflated Data' rather than 'Particular Sets of Data'. 
 
 ## Test environments
 * local Fedora 25 install, R 3.4.1
