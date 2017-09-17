@@ -1,6 +1,6 @@
 # rbtt (Robust bootstrapped t-test) 
 
-[![CRAN version](https://www.r-pkg.org/badges/version/rbtt)](https://www.r-pkg.org/badges/version/rbtt)
+[![CRAN version](https://www.r-pkg.org/badges/version/rbtt)](https://cran.r-project.org/package=rbtt)
 
 [![Travis-CI Build Status](http://travis-ci.org/WannabeSmith/rbtt.svg?branch=master)](http://travis-ci.org/WannabeSmith/rbtt)
 
