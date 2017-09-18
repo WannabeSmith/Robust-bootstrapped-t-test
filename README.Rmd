@@ -96,7 +96,7 @@ Now, let's evaluate the type-I error of these simulations using a significance l
 # t.test type-I error with significance level of 0.05:
 sum(pval.table[,1] < 0.05) / n.sim
 
-# rbtt type-I error with significance level of 0.05
+# rbtt type-I error with significance level of 0.05:
 sum(pval.table[,2] < 0.05) / n.sim
 ```
 

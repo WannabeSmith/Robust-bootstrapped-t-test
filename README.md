@@ -114,7 +114,7 @@ significance level of 0.05.
 
     ## [1] 0.06206
 
-    # rbtt type-I error with significance level of 0.05
+    # rbtt type-I error with significance level of 0.05:
     sum(pval.table[,2] < 0.05) / n.sim
 
     ## [1] 0.05005
