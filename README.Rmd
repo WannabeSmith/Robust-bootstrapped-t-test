@@ -17,7 +17,7 @@ options(digits = 4)
 # rbtt (Robust bootstrap-based $t$-test)
 
 [![CRAN version](https://www.r-pkg.org/badges/version/rbtt)](https://cran.r-project.org/package=rbtt) 
-[![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/rbtt)]
+[![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/rbtt)](https://cranlogs.r-pkg.org/badges/grand-total/rbtt)
 
 [![Travis-CI Build Status](http://travis-ci.org/WannabeSmith/rbtt.svg?branch=master)](http://travis-ci.org/WannabeSmith/rbtt) 
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/WannabeSmith/rbtt?branch=master&svg=true)](https://ci.appveyor.com/project/WannabeSmith/rbtt)

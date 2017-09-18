@@ -3,8 +3,8 @@ rbtt (Robust bootstrap-based *t*-test)
 
 [![CRAN
 version](https://www.r-pkg.org/badges/version/rbtt)](https://cran.r-project.org/package=rbtt)
-\[![CRAN
-downloads](https://cranlogs.r-pkg.org/badges/grand-total/rbtt)\]
+[![CRAN
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/rbtt)](https://cranlogs.r-pkg.org/badges/grand-total/rbtt)
 
 [![Travis-CI Build
 Status](http://travis-ci.org/WannabeSmith/rbtt.svg?branch=master)](http://travis-ci.org/WannabeSmith/rbtt)
@@ -45,13 +45,13 @@ Then we may compute rbtt-based *t*-tests to compare the means:
     ##  Two-sided robust bootstrapped t-test assuming equal variance
     ## 
     ## data:  x and y
-    ## t = -2.5, p-value = 0.01
+    ## t = -2.3, p-value = 0.03
     ## alternative hypothesis: true difference in means is not equal to 0
     ## 95 percent confidence interval:
-    ##  -5.9118 -0.8248
+    ##  -7.2644 -0.1393
     ## sample estimates:
     ## mean of x mean of y 
-    ##    0.8486    4.3844
+    ##    0.8163    5.1450
 
     # Use ’method = 2' for a two-sample, one-sided rbtt without the equal variance assumption
     rbtt(x, y, n.boot=999, method = 2)
@@ -60,13 +60,13 @@ Then we may compute rbtt-based *t*-tests to compare the means:
     ##  One-sided robust bootstrapped t-test not assuming equal variance
     ## 
     ## data:  x and y
-    ## t = -4.2, p-value <2e-16
+    ## t = -4, p-value <2e-16
     ## alternative hypothesis: true difference in means is less than 0
     ## 95 percent confidence interval:
-    ##  -5.592 -1.480
+    ##  -6.932 -1.726
     ## sample estimates:
     ## mean of x mean of y 
-    ##    0.8486    4.3844
+    ##    0.8163    5.1450
 
 Alternatively, you can specify `method = "both"` to perform both methods
 simultaneously (this is also done by default).
@@ -78,12 +78,12 @@ Parallelize rbtt
     system.time(rbtt(x, y, n.boot = 99999, method = 1, n.cores = 1))
 
     ##    user  system elapsed 
-    ##   9.388   0.013   9.473
+    ##   8.150   0.011   8.198
 
     system.time(rbtt(x, y, n.boot = 99999, method = 1, n.cores = 3))
 
     ##    user  system elapsed 
-    ##   7.573   0.084   4.083
+    ##   6.617   0.078   3.782
 
 Comparison between rbtt and t.test
 ----------------------------------
@@ -115,12 +115,12 @@ significance level of 0.05.
     # t.test type-I error with significance level of 0.05:
     sum(pval.table[,1] < 0.05) / n.sim
 
-    ## [1] 0.05906
+    ## [1] 0.06006
 
     # rbtt type-I error with significance level of 0.05:
     sum(pval.table[,2] < 0.05) / n.sim
 
-    ## [1] 0.04605
+    ## [1] 0.05005
 
 More accurate p-values and type-I error estimates can be obtained by
 increasing `n.boot` and `n.sim`, respectively
