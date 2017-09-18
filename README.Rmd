@@ -14,6 +14,8 @@ library(parallel)
 options(digits = 4)
 ```
 
+# rbtt (Robust bootstrap-based $t$-test)
+
 [![CRAN version](https://www.r-pkg.org/badges/version/rbtt)](https://cran.r-project.org/package=rbtt) 
 [![Travis-CI Build Status](http://travis-ci.org/WannabeSmith/rbtt.svg?branch=master)](http://travis-ci.org/WannabeSmith/rbtt) 
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/WannabeSmith/rbtt?branch=master&svg=true)](https://ci.appveyor.com/project/WannabeSmith/rbtt)
@@ -66,6 +68,8 @@ system.time(rbtt(x, y, n.boot = 99999, method = 1, n.cores = 3))
 ```
 
 ## Comparison between rbtt and t.test
+
+First, we perform some simulations.
 ```{r}
 n.sim <- 999
 
@@ -85,7 +89,10 @@ pval.table.list <- mclapply(1:n.sim, function(i)
 }, mc.cores = 4)
 
 pval.table <- do.call(rbind, pval.table.list)
+```
 
+Now, let's evaluate the type-I of these simulations using a significance level of 0.05.
+```{r}
 # t.test type-I error with significance level of 0.05:
 sum(pval.table[,1] < 0.05) / n.sim
 

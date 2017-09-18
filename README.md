@@ -1,3 +1,6 @@
+rbtt (Robust bootstrap-based *t*-test)
+======================================
+
 [![CRAN
 version](https://www.r-pkg.org/badges/version/rbtt)](https://cran.r-project.org/package=rbtt)
 [![Travis-CI Build
@@ -39,13 +42,13 @@ Then we may compute rbtt-based *t*-tests to compare the means:
     ##  Two-sided robust bootstrapped t-test assuming equal variance
     ## 
     ## data:  x and y
-    ## t = -2.3, p-value = 0.01
+    ## t = -2.3, p-value = 0.02
     ## alternative hypothesis: true difference in means is not equal to 0
     ## 95 percent confidence interval:
-    ##  -5.4787 -0.2699
+    ##  -3.9314 -0.2318
     ## sample estimates:
     ## mean of x mean of y 
-    ##    0.8402    4.2054
+    ##     0.796     3.127
 
     # Use ’method = 2' for a two-sample, one-sided rbtt without the equal variance assumption
     rbtt(x, y, n.boot=999, method = 2)
@@ -54,13 +57,13 @@ Then we may compute rbtt-based *t*-tests to compare the means:
     ##  One-sided robust bootstrapped t-test not assuming equal variance
     ## 
     ## data:  x and y
-    ## t = -3.8, p-value = 0.006
+    ## t = -3.7, p-value <2e-16
     ## alternative hypothesis: true difference in means is less than 0
     ## 95 percent confidence interval:
-    ##  -5.554 -1.177
+    ##  -3.8504 -0.8109
     ## sample estimates:
     ## mean of x mean of y 
-    ##    0.8402    4.2054
+    ##     0.796     3.127
 
 Alternatively, you can specify `method = "both"` to perform both methods
 simultaneously (this is also done by default).
@@ -72,15 +75,17 @@ Parallelize rbtt
     system.time(rbtt(x, y, n.boot = 99999, method = 1, n.cores = 1))
 
     ##    user  system elapsed 
-    ##   8.248   0.007   8.297
+    ##   8.555   0.010   8.615
 
     system.time(rbtt(x, y, n.boot = 99999, method = 1, n.cores = 3))
 
     ##    user  system elapsed 
-    ##   6.442   0.091   3.714
+    ##   7.065   0.083   4.118
 
 Comparison between rbtt and t.test
 ----------------------------------
+
+First, we perform some simulations.
 
     n.sim <- 999
 
@@ -101,15 +106,18 @@ Comparison between rbtt and t.test
 
     pval.table <- do.call(rbind, pval.table.list)
 
+Now, let's evaluate the type-I of these simulations using a significance
+level of 0.05.
+
     # t.test type-I error with significance level of 0.05:
     sum(pval.table[,1] < 0.05) / n.sim
 
-    ## [1] 0.07007
+    ## [1] 0.08809
 
     # rbtt type-I error with significance level of 0.05
     sum(pval.table[,2] < 0.05) / n.sim
 
-    ## [1] 0.05706
+    ## [1] 0.05205
 
 More accurate p-values and type-I error estimates can be obtained by
 increasing `n.boot` and `n.sim`, respectively
