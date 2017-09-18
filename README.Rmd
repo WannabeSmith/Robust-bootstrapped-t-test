@@ -91,7 +91,7 @@ pval.table.list <- mclapply(1:n.sim, function(i)
 pval.table <- do.call(rbind, pval.table.list)
 ```
 
-Now, let's evaluate the type-I of these simulations using a significance level of 0.05.
+Now, let's evaluate the type-I error of these simulations using a significance level of 0.05.
 ```{r}
 # t.test type-I error with significance level of 0.05:
 sum(pval.table[,1] < 0.05) / n.sim
@@ -101,3 +101,8 @@ sum(pval.table[,2] < 0.05) / n.sim
 ```
 
 More accurate p-values and type-I error estimates can be obtained by increasing ```n.boot``` and ```n.sim```, respectively
+
+## Contributors
+* Ian Waudby-Smith (University of Waterloo)
+
+* Dr. Pengfei Li (University of Waterloo)

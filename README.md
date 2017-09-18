@@ -42,13 +42,13 @@ Then we may compute rbtt-based *t*-tests to compare the means:
     ##  Two-sided robust bootstrapped t-test assuming equal variance
     ## 
     ## data:  x and y
-    ## t = -2.3, p-value = 0.02
+    ## t = -2.1, p-value = 0.02
     ## alternative hypothesis: true difference in means is not equal to 0
     ## 95 percent confidence interval:
-    ##  -3.9314 -0.2318
+    ##  -3.6203 -0.1577
     ## sample estimates:
     ## mean of x mean of y 
-    ##     0.796     3.127
+    ##    0.9264    3.1507
 
     # Use ’method = 2' for a two-sample, one-sided rbtt without the equal variance assumption
     rbtt(x, y, n.boot=999, method = 2)
@@ -57,13 +57,13 @@ Then we may compute rbtt-based *t*-tests to compare the means:
     ##  One-sided robust bootstrapped t-test not assuming equal variance
     ## 
     ## data:  x and y
-    ## t = -3.7, p-value <2e-16
+    ## t = -3.4, p-value = 0.004
     ## alternative hypothesis: true difference in means is less than 0
     ## 95 percent confidence interval:
-    ##  -3.8504 -0.8109
+    ##  -3.6906 -0.7581
     ## sample estimates:
     ## mean of x mean of y 
-    ##     0.796     3.127
+    ##    0.9264    3.1507
 
 Alternatively, you can specify `method = "both"` to perform both methods
 simultaneously (this is also done by default).
@@ -75,12 +75,12 @@ Parallelize rbtt
     system.time(rbtt(x, y, n.boot = 99999, method = 1, n.cores = 1))
 
     ##    user  system elapsed 
-    ##   8.555   0.010   8.615
+    ##   7.945   0.012   7.992
 
     system.time(rbtt(x, y, n.boot = 99999, method = 1, n.cores = 3))
 
     ##    user  system elapsed 
-    ##   7.065   0.083   4.118
+    ##   6.482   0.083   3.772
 
 Comparison between rbtt and t.test
 ----------------------------------
@@ -106,18 +106,25 @@ First, we perform some simulations.
 
     pval.table <- do.call(rbind, pval.table.list)
 
-Now, let's evaluate the type-I of these simulations using a significance
-level of 0.05.
+Now, let's evaluate the type-I error of these simulations using a
+significance level of 0.05.
 
     # t.test type-I error with significance level of 0.05:
     sum(pval.table[,1] < 0.05) / n.sim
 
-    ## [1] 0.08809
+    ## [1] 0.06206
 
     # rbtt type-I error with significance level of 0.05
     sum(pval.table[,2] < 0.05) / n.sim
 
-    ## [1] 0.05205
+    ## [1] 0.05005
 
 More accurate p-values and type-I error estimates can be obtained by
 increasing `n.boot` and `n.sim`, respectively
+
+Contributors
+------------
+
+-   Ian Waudby-Smith (University of Waterloo)
+
+-   Dr. Pengfei Li (University of Waterloo)
